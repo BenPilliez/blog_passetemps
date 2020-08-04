@@ -1,0 +1,5 @@
+easy_admin:
+  entities:
+    - App\Entity\Post
+    - App\Entity\Category
+    - App\Entity\Tag
