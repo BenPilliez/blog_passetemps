@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
+ *  @Vich\Uploadable()
  */
 class Post
 {
@@ -37,11 +40,17 @@ class Post
     private $slug;
 
     /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
@@ -57,11 +66,24 @@ class Post
      */
     private $tags;
 
+    /**
+     * @var null|Image
+     */
+    private $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="post", orphanRemoval=true, cascade={"persist"})
+     */
+    private $images;
+
+    private $imageFiles;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,28 +127,14 @@ class Post
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     public function getCategories(): ?Category
@@ -163,6 +171,92 @@ class Post
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
         }
+
+        return $this;
+    }
+
+    public function setCreatedAt(DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->setPost($this) === $this) {
+                $image->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get }).
+     */
+    public function getImageFiles()
+    {
+        return $this->imageFiles;
+    }
+
+    /**
+     * Set }).
+     *
+     * @param mixed $pictureFiles
+     * @param mixed $imageFiles
+     *
+     * @return self
+     */
+    public function setImageFiles($imageFiles)
+    {
+        foreach ($imageFiles as $pictureFile) {
+            $picture = new Image();
+            $picture->setImageFile($pictureFile);
+            $this->addImage($picture);
+        }
+
+        $this->imageFiles = $imageFiles;
 
         return $this;
     }

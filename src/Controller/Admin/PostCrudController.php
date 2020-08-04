@@ -3,9 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Post;
+use App\Form\ImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -27,7 +33,7 @@ class PostCrudController extends AbstractCrudController
         // (none by default, so you can manage all instances of the entity)
             ->setEntityPermission('ROLE_ADMIN')
 
-              // the names of the Doctrine entity properties where the search is made on
+        // the names of the Doctrine entity properties where the search is made on
         // (by default it looks for in all properties)
             ->setSearchFields(['title', 'createdAt'])
         // defines the initial sorting applied to the list of entities
@@ -45,11 +51,41 @@ class PostCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        return [
+        $fields = [
+            IdField::new('id')->onlyOnIndex(),
             TextField::new('title'),
             TextEditorField::new('content'),
-            AssociationField::new('tags'),
             AssociationField::new('categories'),
+            CollectionField::new('images')
+                ->setEntryType(ImageType::class)
+                ->setFormTypeOption('by_reference', false)
+                ->onlyOnForms(),
         ];
+
+        if (Crud::PAGE_INDEX === $pageName) {
+            array_push(
+                $fields,
+                ArrayField::new('tags'),
+            );
+        } else {
+            array_push(
+                $fields,
+                AssociationField::new('tags'),
+            );
+        }
+
+        return $fields;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
+                return $action->setCssClass('btn btn-primary');
+            })
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
+                return $action->setCssClass('btn btn-danger');
+            })
+        ;
     }
 }
