@@ -5,9 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\Tags;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,7 +20,10 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        // redirect to some CRUD controller
+        $routeBuilder = $this->get(CrudUrlGenerator::class)->build();
+
+        return $this->redirect($routeBuilder->setController(CategoryCrudController::class)->generateUrl());
     }
 
     public function configureDashboard(): Dashboard
@@ -36,8 +41,6 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
-
             MenuItem::section('Blog'),
             MenuItem::linkToCrud('Categories', 'fa fa-tags', Category::class),
             MenuItem::linkToCrud('Tags', 'fa fa-tags', Tags::class),
