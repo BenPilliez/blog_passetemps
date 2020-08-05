@@ -1,0 +1,10 @@
+{# templates/bundles/EasyAdminBundle/layout.html.twig #}
+
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{% block configured_javascripts %}
+	{% for js_asset in ea.assets.jsFiles ?? [] %}
+		<script src="{{ asset(js_asset) }}"></script>
+		{{ encore_entry_script_tags('app') }}
+	{% endfor %}
+{% endblock %}
