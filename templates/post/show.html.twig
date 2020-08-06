@@ -4,43 +4,18 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Post</h1>
+	<div class="jumbotron jumbotron bg-cover" style="background-image: url({{vich_uploader_asset(post.categories, 'jumbotronFile')}})">
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ post.id }}</td>
-			</tr>
-			<tr>
-				<th>Title</th>
-				<td>{{ post.title }}</td>
-			</tr>
-			<tr>
-				<th>Content</th>
-				<td>{{ post.content }}</td>
-			</tr>
-			<tr>
-				<th>Slug</th>
-				<td>{{ post.slug }}</td>
-			</tr>
-			<tr>
-				<th>CreatedAt</th>
-				<td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-			<tr>
-				<th>UpdatedAt</th>
-				<td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-			<tr>
-				<th>Thumbnail</th>
-				<td>{{ post.thumbnail }}</td>
-			</tr>
-			<tr>
-				<th>Published</th>
-				<td>{{ post.published ? 'Yes' : 'No' }}</td>
-			</tr>
-		</tbody>
-	</table>
+		<div class="overlay"></div>
+		<div class="container">
+			<h1 class="text-white">{{post.title}}</h1>
+			<span class="text-white">{{post.createdAt | date ('m/d/Y')}}</span>
+		</div>
+	</div>
 
+	<div class="container">
+		{% autoescape %}
+			{{ post.content|raw }}
+		{% endautoescape %}
+	</div>
 {% endblock %}

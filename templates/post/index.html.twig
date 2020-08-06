@@ -6,16 +6,87 @@
 {% block body %}
 	<div class="site-section bg-light">
 		<div class="container">
-			<div class="row align-items-stretch retro-layout-2">
-				<div class="col-md-4">
-					{% for post in latestPosts  %}
-						<a href="{{ path('post.show', {slug:post.slug, id: post.id}) }}" class="h-entry mb-30 v-height gradient" style="background-image: url({{ vich_uploader_asset(post, 'thumbnailFile') | imagine_filter('thumb') }});">
-							<div class="text">
-								<h2>{{post.title}}</h2>
-								<span class="date">{{post.createdAt | date("m/d/Y")}}</span>
+			<div class="row mb-5">
+				<div class="col-12">
+					<h2>Mes dernirères réalisation</h2>
+				</div>
+			</div>
+			<div class="row">
+				{% for post in latestPosts  %}
+					<div class="col-lg-4 mb-4">
+						<div class="entry2">
+							<a href="{{path('post.show', {id: post.id, slug: post.slug})}}"><img src="{{vich_uploader_asset(post, 'thumbnailFile') | imagine_filter('thumb')}}" alt="{{post.title}}" class="img-fluid rounded"></a>
+							<div class="content">
+								<h3>
+									<span class="badge text-white mb-3" style="background-color: {{post.categories.color}}">{{post.categories.name}}</span>
+								</h3>
+
+								<h2>
+									<a href="{{path('post.show', {id: post.id, slug:post.slug})}}">{{post.title}}</a>
+								</h2>
+								<div class="align-items-center text-left ">
+									<span class="d-inline-block mt-1">By
+										<span>Madeleine Faihy</span>
+									</span>
+									<span>&nbsp;-&nbsp;
+										{{post.createdAt | date('m/d/Y')}}</span>
+								</div>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor laudantium sed optio, explicabo ad deleniti impedit facilis fugit recusandae! Illo, aliquid, dicta beatae quia porro id est.</p>
+								<p>
+									<a class="btn btn-primary" href="{{path('post.show', {id: post.id, slug:post.slug })}}">Read More</a>
+								</p>
 							</div>
-						</a>
-					{% endfor %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="pagination justify-content-center">
+				{{ knp_pagination_render(latestPosts) }}
+			</div>
+		</div>
+	</div>
+
+
+	<div class="site-footer">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-md-4">
+					<h3 class="footer-heading mb-4">A props de moi</h3>
+					<p></p>
+				</div>
+				<div class="col-md- mr-5">
+					<ul class="list-unstyled float-left ">
+						<li>
+							<a href="#">A propos de moi</a>
+						</li>
+					</ul>
+					<ul class="list-unstyled float-left  ">
+						{% for category in categories  %}
+							<li>
+								<a href="">{{category.name}}</a>
+							</li>
+
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<div>
+						<h3 class="footer-heading mb-4">Mes réseaux</h3>
+						<p>
+							<a href="">
+								<i class="fab fa-facebook"></i>
+							</a>
+							<a href="">
+								<i class="fab fa-twitter-square"></i>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center">
+					<p></p>
 				</div>
 			</div>
 		</div>

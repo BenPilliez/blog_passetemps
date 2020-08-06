@@ -1,7 +1,6 @@
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 	<div class="carousel-inner">
 		{% for image in field.value %}
-			{{dump(image)}}
 			<div class="carousel-item {% if loop.first %} active {% endif %} ">
 				<a href="#" class="ea-lightbox-thumbnail" data-featherlight="#ea-lightbox-{{image.id}}" data-featherlight-close-on-click="anywhere">
 					<img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('thumb') }}" class="img-fluid">
