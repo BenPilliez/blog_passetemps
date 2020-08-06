@@ -8,12 +8,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
- *  @Vich\Uploadable()
+ * @Vich\Uploadable()
  */
 class Post
 {
@@ -78,16 +77,6 @@ class Post
     private $images;
 
     /**
-     * @ORM\Column(type="string", length= 255)
-     */
-    private $thumbnail;
-
-    /**
-     * @Vich\UploadableField(mapping="post_thumbnails", fileNameProperty="thumbnail")
-     */
-    private $thumbnailFile;
-
-    /**
      * imageFiles.
      *
      * @var mixed
@@ -104,6 +93,16 @@ class Post
      */
     private $comment;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $thumbnail;
+
+    /**
+     * @Vich\UploadableField(mapping="thumbnails", fileNameProperty="thumbnail")
+     */
+    private $thumbnailFile;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -116,6 +115,42 @@ class Post
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnailFile()
+    {
+        return $this->thumbnailFile;
+    }
+
+    /**
+     * @param mixed $thumbnailFile
+     */
+    public function setThumbnailFile($thumbnailFile): void
+    {
+        $this->thumbnailFile = $thumbnailFile;
+
+        if ($thumbnailFile) {
+            $this->updatedAt = new \DateTime();
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * @param mixed $thumbnail
+     */
+    public function setThumbnail($thumbnail): void
+    {
+        $this->thumbnail = $thumbnail;
     }
 
     public function getId(): ?int
@@ -301,52 +336,6 @@ class Post
     public function setPublished(bool $published): self
     {
         $this->published = $published;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of thumbnail.
-     */
-    public function getThumbnail()
-    {
-        return $this->thumbnail;
-    }
-
-    /**
-     * Set the value of thumbnail.
-     *
-     * @param mixed $thumbnail
-     */
-    public function setThumbnail(?string $thumbnail): self
-    {
-        $this->thumbnail = $thumbnail;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of thumbnailFile.
-     */
-    public function getThumbnailFile()
-    {
-        return $this->thumbnailFile;
-    }
-
-    /**
-     * Set the value of thumbnailFile.
-     *
-     * @param mixed $thumbnailFile
-     *
-     * @return self
-     */
-    public function setThumbnailFile(?File $thumbnailFile)
-    {
-        $this->thumbnailFile = $thumbnailFile;
-
-        if ($thumbnailFile) {
-            $this->updatedAt = new \DateTime();
-        }
 
         return $this;
     }

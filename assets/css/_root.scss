@@ -8,7 +8,6 @@
   @each $color, $value in $theme-colors {
     --#{$color}: #{$value};
   }
-  --gray: gray;
   --body-color: #{$body-color};
   --border-width: #{$border-width};
 

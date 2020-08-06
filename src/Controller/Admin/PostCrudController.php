@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PostCrudController extends AbstractCrudController
 {
@@ -57,50 +58,30 @@ class PostCrudController extends AbstractCrudController
     {
         $fields = [];
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            array_push(
-                $fields,
-                IdField::new('id'),
-                BooleanField::new('published', 'Publier'),
-                TextField::new('title', 'Titre'),
-                TextEditorField::new('content', 'Contenu'),
-                AssociationField::new('categories', 'Catégories'),
-                ArrayField::new('tags'),
-                ImageField::new('thumbnail', 'Miniature')
-                    ->setBasePath('/media/posts/'),
-            );
-        } elseif (Crud::PAGE_EDIT === $pageName || Crud::PAGE_NEW === $pageName) {
-            array_push(
-                $fields,
-                TextField::new('title', 'Titre'),
-                TextEditorField::new('content', 'Contenu'),
-                AssociationField::new('categories', 'Catégories'),
-                AssociationField::new('tags'),
-                ImageField::new('thumbnailFile', 'Miniature'),
-                CollectionField::new('images', 'Images')
-                    ->setEntryType(ImageType::class)
-                    ->setFormTypeOption('by_reference', false)
-                    ->onlyOnForms(),
-                BooleanField::new('published', 'Publier'),
-            );
-        } elseif (Crud::PAGE_DETAIL === $pageName) {
-            array_push(
-                $fields,
-                IdField::new('id'),
-                BooleanField::new('published', 'Publier'),
-                TextField::new('title', 'Titre'),
-                TextEditorField::new('content', 'Contenu'),
-                AssociationField::new('categories', 'Catégories'),
-                ArrayField::new('tags'),
-                ImageField::new('thumbnail', 'Miniature')
-                    ->setBasePath('/media/posts/'),
-                CollectionField::new('images', 'Images')
-                    ->setTemplatePath('admin/image_show.html.twig')
-                    ->addJsFiles('build/admin.js')
-            );
-        }
+        $imageFile = ImageField::new('thumbnailFile')->setFormType(VichImageType::class);
+        $image = ImageField::new('thumbnail')->setBasePath('/media/posts');
 
-        return $fields;
+        $id = IdField::new('id');
+        $published = BooleanField::new('published', 'Publier');
+        $title = TextField::new('title', 'Titre');
+        $content = TextEditorField::new('content', 'Contenu');
+        $categories = AssociationField::new('categories', 'Catégories');
+
+        if (Crud::PAGE_INDEX === $pageName) {
+            return [$id, $published, $title, $content, $categories, ArrayField::new('tags'), $image];
+        }
+        if (Crud::PAGE_EDIT === $pageName || Crud::PAGE_NEW === $pageName) {
+            return [$title, $content, $categories, AssociationField::new('tags'),
+                $imageFile, CollectionField::new('images', 'Images')
+                    ->setEntryType(ImageType::class)
+                    ->setFormTypeOption('by_reference', false), $published, ];
+        }
+        if (Crud::PAGE_DETAIL === $pageName) {
+            return [$id, $published, $title, $content, $categories, ArrayField::new('tags'), $image,
+                CollectionField::new('images', 'Images')
+                    ->setTemplatePath('admin/image_show.html.twig'),
+            ];
+        }
     }
 
     public function configureActions(Actions $actions): Actions
@@ -112,12 +93,6 @@ class PostCrudController extends AbstractCrudController
 
     public function configureAssets(Assets $assets): Assets
     {
-        return $assets
-            // the argument of these methods is passed to the asset() Twig function
-            // CSS assets are added just before the closing </head> element
-            // and JS assets are added just before the closing </body> element
-
-            ->addJsFile('build/app.js')
-        ;
+        return $assets->addCssFile('build/admin.css');
     }
 }

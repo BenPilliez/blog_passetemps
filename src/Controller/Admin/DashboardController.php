@@ -48,8 +48,8 @@ class DashboardController extends AbstractDashboardController
         yield  MenuItem::linkToCrud('Commentaires', 'fa fa-file-text', Comment::class);
     }
 
-    public function configureAssets(): Assets
+    /* public function configureAssets(): Assets
     {
-        return Assets::new()->addCssFile('build/app.css')->addJsFile('build/app.js');
-    }
+        return Assets::new()->addCssFile('build/admin.css')->addJsFile('build/admin.js');
+    } */
 }

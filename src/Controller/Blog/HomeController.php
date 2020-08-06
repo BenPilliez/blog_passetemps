@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Blog;
 
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;

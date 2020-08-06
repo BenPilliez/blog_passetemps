@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Blog;
 
 use App\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
