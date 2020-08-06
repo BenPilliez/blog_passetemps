@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoryRepository;
+use App\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -12,18 +12,30 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends AbstractController
 {
-    public function __construct(CategoryRepository $categoryRepository)
+    /**
+     * @var PropertyRepository
+     */
+    private $repository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(PostRepository $repository, EntityManagerInterface $em)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->repository = $repository;
+        $this->em = $em;
     }
 
     /**
-     * @Route("/", name="home", methods={"GET"})
+     * @Route("/", name="index")
      */
-    public function index(): Response
+    public function index()
     {
-        return $this->render('base.html.twig', [
-            'categories' => $this->categoryRepository->findAll(),
+        $latestPosts = $this->repository->findLastest();
+
+        return $this->render('post/index.html.twig', [
+            'latestPosts' => $latestPosts,
         ]);
     }
 }
