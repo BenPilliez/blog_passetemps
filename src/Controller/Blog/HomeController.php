@@ -2,6 +2,7 @@
 
 namespace App\Controller\Blog;
 
+use App\Repository\AboutRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ImageRepository;
 use App\Repository\PostRepository;
@@ -34,16 +35,18 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(Request $request, CategoryRepository $categoryRepository, ImageRepository $imageRepository): Response
+    public function index(Request $request, CategoryRepository $categoryRepository, ImageRepository $imageRepository, AboutRepository $aboutRepository): Response
     {
         $latestPosts = $this->repository->findLastest();
         $categories = $categoryRepository->findAll();
         $images = $imageRepository->ramdonImage();
+        $about = $aboutRepository->about();
 
         return $this->render('post/index.html.twig', [
             'latestPosts' => $latestPosts,
             'categories' => $categories,
             'images' => $images,
+            'about' => $about,
         ]);
     }
 }

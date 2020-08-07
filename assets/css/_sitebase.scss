@@ -5,6 +5,15 @@
   src: local("Oswald-Bold"),
     url("../../public/fonts/Oswald-Bold.ttf") format("truetype");
 }
+
+.page-section {
+  padding: 8rem 0;
+}
+
+.bg-primary {
+  background-color: #f4623a !important;
+}
+
 .jumbotron {
   text-align: center;
   padding-top: 10rem;
@@ -211,4 +220,25 @@ hr.light {
     width: 100%;
     min-width: 300px;
   }
+}
+
+.image-gallery {
+  height: 250px;
+  width: 100%;
+  display: block;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  text-decoration: none;
+  .tag {
+    position: absolute;
+    border-radius: 25px;
+    top: 10px;
+    left: 5px;
+  }
+}
+
+.image-gallery:hover {
+  text-decoration: none;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\About;
 use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Post;
@@ -41,6 +42,9 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        yield MenuItem::section('A props');
+        yield MenuItem::linkToCrud('Description', 'fas fa-id-card', About::class);
+
         yield   MenuItem::section('Blog');
         yield  MenuItem::linkToCrud('Categories', 'fa fa-tags', Category::class);
         yield  MenuItem::linkToCrud('Tags', 'fa fa-tags', Tags::class);

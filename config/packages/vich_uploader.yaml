@@ -13,3 +13,7 @@ vich_uploader:
       uri_prefix: "%uploads_path_jumbotron%"
       upload_destination: "%kernel.project_dir%/public/%uploads_path_jumbotron%"
       namer: Vich\UploaderBundle\Naming\UniqidNamer
+    avatars:
+      uri_prefix: "%uploads_path_avatar%"
+      upload_destination: "%kernel.project_dir%/public/%uploads_path_avatar%"
+      namer: Vich\UploaderBundle\Naming\UniqidNamer

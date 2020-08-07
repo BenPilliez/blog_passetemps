@@ -6,6 +6,7 @@
 			{% block title %}Blog passe-temps
 			{% endblock %}
 		</title>
+		{% block stylesheet %}{% endblock %}
 		<link rel="icon" href="{{ "/images/favicon.ico" }}"/>
 		{{ encore_entry_link_tags('app') }}
 
@@ -13,10 +14,46 @@
 
 	<body>
 		{{ render(controller('App\\Controller\\Blog\\NavbarController::navbar')) }}
+
 		{% block body %}{% endblock %}
 		{% block javascripts %}{% endblock %}
 		{{ encore_entry_script_tags('app') }}
 
+		<footer class="bg-light py-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-6 text-center">
+						<h4 class="text-muted ">
+							Mes réseaux
+						</h4>
+						<a href="https://github.com/BenPilliez/" target="_blank">
+							<i class="fab fa-github-alt fa-2x"></i>
+						</a>
+						<a href="https://www.linkedin.com/in/benjamin-pilliez-bb0624175/" target="_blank">
+							<i class="fab fa-linkedin fa-2x"></i>
+						</a>
+					</div>
 
+					<div class="text-center col-6">
+						<h4 class="text-muted ">
+							Lien vers le projet
+						</h4>
+						<a href="https://github.com/BenPilliez/blog_passetemps" target="_blank">
+							<i class="fab fa-github-square fa-3x"></i>
+						</a>
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col">
+						<div class="small text-center text-muted col-12">Copyright ©
+							{{ 'now' | date('Y') }}
+							- Pilliez Benjamin
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</footer>
 	</body>
 </html>
