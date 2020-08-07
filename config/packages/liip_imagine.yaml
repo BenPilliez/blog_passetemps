@@ -9,9 +9,8 @@ liip_imagine:
       cache: ~
       filters:
         thumbnail: { size: [360, 230], mode: outbound }
-    jumbotron:
-      quality: 80
+    medium:
+      quality: 75
       cache: ~
       filters:
-        crop:
-          width: 1350
+        thumbnail: { size: [430, 231], mode: outbound }
