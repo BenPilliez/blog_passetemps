@@ -17,8 +17,39 @@
 			</div>
 		</div>
 	</header>
+	<section id="lastPost">
+		<div class="container-fluid mt-5">
+			<h2 class="text-center mt-0">Mes dernières réalisations</h2>
+			<hr class="divider my-4"/>
+			<div class="row">
+				<ul class="grid cs-style-2">
+					{% for post in latestPosts  %}
+						<li>
+							<figure>
+								<img src="{{vich_uploader_asset(post, 'thumbnailFile') | imagine_filter('medium')}}" alt="image-{{post.title}}">
+								<figcaption>
+									<h3>{{post.title}}</h3>
+									<a href="{{path('post.show', {id: post.id, slug: post.slug})}}">Voir l'article</a>
+								</figcaption>
+							</figure>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</section>
 
-	<section class="realisations">
-		<div class="container-fluid"></div>
+	<section id="gallery-image">
+		<div class="container-fluide">
+			<div class="row no-gutters">
+				{% for image in images  %}
+					<div class="col-lg-4 col-sm-6">
+						<a href="#" data-featherlight="#mylightbox-{{image.id}}">
+							<img id="#mylightbox-{{image.id}}" src="{{vich_uploader_asset(image, 'imageFile') | imagine_filter('medium')}}" alt="{{image.post.title}}"/>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
 	</section>
 {% endblock %}

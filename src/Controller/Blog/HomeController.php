@@ -3,6 +3,7 @@
 namespace App\Controller\Blog;
 
 use App\Repository\CategoryRepository;
+use App\Repository\ImageRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,14 +34,16 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(Request $request, CategoryRepository $categoryRepository): Response
+    public function index(Request $request, CategoryRepository $categoryRepository, ImageRepository $imageRepository): Response
     {
-        $latestPosts = $this->repository->findLastest($request->query->getInt('page', 1));
+        $latestPosts = $this->repository->findLastest();
         $categories = $categoryRepository->findAll();
+        $images = $imageRepository->ramdonImage();
 
         return $this->render('post/index.html.twig', [
             'latestPosts' => $latestPosts,
             'categories' => $categories,
+            'images' => $images,
         ]);
     }
 }

@@ -6,7 +6,6 @@ use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
@@ -26,16 +25,13 @@ class PostRepository extends ServiceEntityRepository
     /**
      * findLastest.
      */
-    public function findLastest(int $page): PaginationInterface
+    public function findLastest()
     {
-        $posts = $this->findPublished()
+        return $this->findPublished()
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult()
         ;
-
-        return $this->paginator->paginate(
-            $posts->getQuery(),
-            $page,
-            3
-        );
     }
 
     public function findPublished(): QueryBuilder

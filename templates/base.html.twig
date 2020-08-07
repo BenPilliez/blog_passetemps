@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class=" js no-touch">
 	<head>
 		<meta charset="UTF-8">
 		<title>
@@ -7,8 +7,8 @@
 			{% endblock %}
 		</title>
 		<link rel="icon" href="{{ "/images/favicon.ico" }}"/>
-
 		{{ encore_entry_link_tags('app') }}
+
 	</head>
 
 	<body>
@@ -16,6 +16,7 @@
 		{% block body %}{% endblock %}
 		{% block javascripts %}{% endblock %}
 		{{ encore_entry_script_tags('app') }}
+
 
 	</body>
 </html>
