@@ -82,38 +82,8 @@
 
 	<section>
 		<div class="container">
-			<div class="pt-5">
-				<h3 class="mb-5">{{post.comment|length}}
-					commentaires</h3>
-				<ul class="comment-list">
-					{% for comment in post.comment  %}
-						<li class="comment">
-							<div class="comment-body">
-								<h3 class="display-1">{{comment.author}}</h3>
-								<div class="meta">{{comment.createdAt|date('m/d/Y')}}</div>
-								<p>{{comment.content}}</p>
-								<p>
-									<a class="btn btn-success" data-form id="{{comment.id}}">Répondre</a>
-									{{ render(controller('App\\Controller\\Blog\\CommentController::commentForm',  {hidden: 'hidden-form',id: comment.id, form_id: "comment-" ~ comment.id, path: 'comment.edit'}))  }}</p>
-								{% if comment.commentChildrens%}
-									<ul class="children">
-										{% for children in comment.commentChildrens  %}
-											<li class="comment">
-												<div class="comment-body">
-													<h3>{{children.author}}</h3>
-													<div class="meta">{{children.createdAt|date('m/d/Y')}}</div>
-													<p>{{children.content}}</p>
-												</div>
-											</li>
-										{% endfor %}
-									</ul>
-								{% endif %}
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-				<button class="btn">click</button>
-				{{ render(controller('App\\Controller\\Blog\\CommentController::commentForm',  {id: post.id, title: "Laisser moi un petit com'", form_id: "new-" ~ post.id, path: "comment.new"}))  }}
-			</div>
-		</section>
-	{% endblock %}
+			{{ render(path('comment.list', {id: post.id})) }}
+			{{ render(controller('App\\Controller\\Blog\\CommentController::commentForm',  {id: post.id, title: "Laisser moi un petit com'", form_id: "new-" ~ post.id, path: "comment.new"}))  }}
+		</div>
+	</section>
+{% endblock %}

@@ -36,7 +36,7 @@ class CommentController extends AbstractController
         $path = $request->get('path');
         $form_id = $request->get('form_id');
 
-        return $this->render('blog/post/_comment.html.twig', [
+        return $this->render('blog/post/_commentForm.html.twig', [
             'form' => $form->createView(),
             'id' => $id,
             'hidden' => $hidden,
@@ -91,5 +91,18 @@ class CommentController extends AbstractController
                 'slug' => $comment->getPost()->getSlug(),
             ]);
         }
+    }
+
+    /**
+     * @Route("/list/{id}", name="comment.list")
+     */
+    public function list(Post $post, Request $request)
+    {
+        $request = Request::createFromGlobals();
+        $comment = $this->repository->paginateComment($post->getComment(), $request->query->get('page'));
+
+        return $this->render('blog/post/_comments.html.twig', [
+            'comments' => $comment,
+        ]);
     }
 }
