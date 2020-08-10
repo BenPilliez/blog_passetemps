@@ -2,9 +2,7 @@
 
 namespace App\Controller\Blog;
 
-use App\Entity\Comment;
 use App\Entity\Post;
-use App\Form\CommentType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,28 +34,12 @@ class PostController extends AbstractController
     /**
      * @Route("/{slug}-{id}", name="post.show", requirements={"slug": "[a-z0-9\-]*"}, methods={"GET", "POST"})
      */
-    public function show(Post $post, Request $request): Response
+    public function show(Post $post): Response
     {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setPost($post);
-            $this->em->persist($comment);
-            $this->em->flush();
-            $this->addFlash('success', 'Votre commentaire a été envoyé et soumis à une validation');
-
-            return $this->redirectToRoute('post.show', [
-                'id' => $post->getId(),
-                'slug' => $post->getSlug(),
-            ]);
-        }
+        $comments = $post->getComment();
 
         return $this->render('blog/post/show.html.twig', [
             'post' => $post,
-            'form' => $form->createView(),
         ]);
     }
 }

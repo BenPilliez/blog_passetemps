@@ -287,14 +287,7 @@ hr.light {
   clear: both;
   list-style: none;
 }
-.comment-list li .vcard {
-  width: 80px;
-  float: left;
-}
-.comment-list li .vcard img {
-  width: 50px;
-  border-radius: 50%;
-}
+
 .comment-list li .comment-body {
   float: right;
   width: calc(100% - 80px);
@@ -319,4 +312,8 @@ hr.light {
 .comment-list li .comment-body .reply:hover {
   color: #000;
   background: #e3e3e3;
+}
+
+.hidden-form {
+  display: none;
 }

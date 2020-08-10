@@ -8,6 +8,7 @@
 		</title>
 		{% block stylesheet %}{% endblock %}
 		<link rel="icon" href="{{ "/images/favicon.ico" }}"/>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
 		{{ encore_entry_link_tags('app') }}
 
 	</head>
@@ -16,8 +17,7 @@
 		{{ render(controller('App\\Controller\\Blog\\NavbarController::navbar')) }}
 
 		{% block body %}{% endblock %}
-		{% block javascripts %}{% endblock %}
-		{{ encore_entry_script_tags('app') }}
+		<div id="cookieconsent"></div>
 
 		<footer class="bg-light py-5">
 			<div class="container">
@@ -55,5 +55,10 @@
 
 			</div>
 		</footer>
+		{% block javascripts %}{% endblock %}
+		<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+		{{ encore_entry_script_tags('app') }}
+
+
 	</body>
 </html>

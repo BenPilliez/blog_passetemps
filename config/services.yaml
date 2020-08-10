@@ -7,6 +7,7 @@ parameters:
   uploads_path: "/media/posts/"
   uploads_path_jumbotron: "/media/jumbotrons"
   uploads_path_avatar: "/media/avatars"
+  google_recaptcha_site_key: "%env(GOOGLE_RECAPTCHA_SITE_KEY)%"
 services:
   # default configuration for services in *this* file
   _defaults:

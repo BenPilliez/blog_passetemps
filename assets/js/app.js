@@ -31,6 +31,9 @@ $("[data-slider]").slick({
   arrows: true,
 });
 
+$("[data-form]").click(function (event) {
+  $("#comment-" + event.target.id).removeClass("hidden-form");
+});
 // Collapse Navbar
 var navbarCollapse = function () {
   if ($("#mainNav").offset().top > 100) {
@@ -43,5 +46,21 @@ var navbarCollapse = function () {
 navbarCollapse();
 // Collapse the navbar when page is scrolled
 $(window).scroll(navbarCollapse);
+
+window.cookieconsent.initialise({
+  container: document.getElementById("cookieconsent"),
+  palette: {
+    popup: { background: "#fff" },
+    button: { background: "#aa0000" },
+  },
+  revokable: true,
+  onStatusChange: function (status) {
+    console.log(this.hasConsented() ? "enable cookies" : "disable cookies");
+  },
+  law: {
+    regionalLaw: false,
+  },
+  location: true,
+});
 
 console.log("Hello Webpack Encore! Edit me in assets/js/app.js");

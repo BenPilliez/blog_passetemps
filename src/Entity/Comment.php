@@ -43,7 +43,7 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="comment")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $post;
 
@@ -53,15 +53,22 @@ class Comment
     private $published;
 
     /**
-     * @ORM\OneToMany(targetEntity=ReplyComment::class, mappedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="commentChildrens", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
      */
-    private $replyComments;
+    private $comment;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="comment", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commentChildrens;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->published = false;
-        $this->replyComments = new ArrayCollection();
+        $this->commentChildrens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,31 +148,43 @@ class Comment
         return $this;
     }
 
-    /**
-     * @return Collection|ReplyComment[]
-     */
-    public function getReplyComments(): Collection
+    public function getComment(): ?self
     {
-        return $this->replyComments;
+        return $this->comment;
     }
 
-    public function addReplyComment(ReplyComment $replyComment): self
+    public function setComment(?self $comment): self
     {
-        if (!$this->replyComments->contains($replyComment)) {
-            $this->replyComments[] = $replyComment;
-            $replyComment->setComments($this);
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getCommentChildrens(): Collection
+    {
+        return $this->commentChildrens;
+    }
+
+    public function addCommentChildren(Comment $commentChildren): self
+    {
+        if (!$this->commentChildrens->contains($commentChildren)) {
+            $this->commentChildrens[] = $commentChildren;
+            $commentChildren->setComment($this);
         }
 
         return $this;
     }
 
-    public function removeReplyComment(ReplyComment $replyComment): self
+    public function removeCommentChildren(Comment $commentChildren): self
     {
-        if ($this->replyComments->contains($replyComment)) {
-            $this->replyComments->removeElement($replyComment);
+        if ($this->commentChildrens->contains($commentChildren)) {
+            $this->commentChildrens->removeElement($commentChildren);
             // set the owning side to null (unless already changed)
-            if ($replyComment->getComments() === $this) {
-                $replyComment->setComments(null);
+            if ($commentChildren->getComment() === $this) {
+                $commentChildren->setComment(null);
             }
         }
 
