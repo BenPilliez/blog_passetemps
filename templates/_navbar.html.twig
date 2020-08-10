@@ -8,10 +8,13 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto my-2 my-lg-0">
 				{% for category in categories  %}
-					<li class="nav-item {% if current_menu is defined %} active {% endif %}">
-						<a class="nav-link" href="#">{{category.name}}</a>
+					<li class="nav-item ">
+						<a class="nav-link" href="{{path('post.index', {id: category.id})}}">{{category.name}}</a>
 					</li>
 				{% endfor %}
+				<li class="nav-item ">
+					<a class="nav-link" href="{{path('about')}}">A propos</a>
+				</li>
 			</ul>
 		</div>
 	</div>

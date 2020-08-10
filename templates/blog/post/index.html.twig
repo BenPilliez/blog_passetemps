@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Blog passe-temps
+{% endblock %}
+
+{% block body %}
+
+	{% include "_jumbotron.html.twig" with posts[0] ?  {category : posts[0].categories.name }  %}
+
+	<section id="lastPost" class="bg-light page-section">
+		<div class="container-fluid ">
+			<div class="row">
+				<div class="col-12">
+					<ul class="grid cs-style-2">
+						{% for post in posts  %}
+							<li>
+								<figure>
+									<img src="{{vich_uploader_asset(post, 'thumbnailFile') | imagine_filter('medium')}}" alt="image-{{post.title}}">
+									<figcaption>
+										<h3>{{post.title}}</h3>
+										<a href="{{path('post.show', {id: post.id, slug: post.slug})}}">Voir l'article</a>
+									</figcaption>
+								</figure>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="pagination justify-content-center">
+				{{ knp_pagination_render(posts) }}
+			</div>
+		</div>
+	</section>
+
+
+{% endblock %}

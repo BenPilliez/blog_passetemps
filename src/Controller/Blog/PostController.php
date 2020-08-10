@@ -5,6 +5,7 @@ namespace App\Controller\Blog;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,12 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/", name="post_index", methods={"GET"})
+     * @Route("/", name="post.index", methods={"GET"})
      */
-    public function index(PostRepository $postRepository): Response
+    public function index(PostRepository $postRepository, Request $request): Response
     {
-        return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+        return $this->render('blog/post/index.html.twig', [
+            'posts' => $postRepository->findByCategory($request->query->get('id'), $request->query->getInt('page', 1)),
         ]);
     }
 
@@ -28,7 +29,7 @@ class PostController extends AbstractController
      */
     public function show(Post $post): Response
     {
-        return $this->render('post/show.html.twig', [
+        return $this->render('blog/post/show.html.twig', [
             'post' => $post,
         ]);
     }

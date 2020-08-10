@@ -6,6 +6,7 @@ use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
@@ -39,6 +40,20 @@ class PostRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.published = true')
         ;
+    }
+
+    public function findByCategory(int $idCategory, int $page): PaginationInterface
+    {
+        $query = $this->findPublished()
+            ->andWhere('p.categories = :idCategory')
+            ->setParameter('idCategory', $idCategory)
+        ;
+
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $page,
+            12
+        );
     }
 
     // /**

@@ -42,7 +42,7 @@ class HomeController extends AbstractController
         $images = $imageRepository->ramdonImage();
         $about = $aboutRepository->about();
 
-        return $this->render('post/index.html.twig', [
+        return $this->render('blog/index.html.twig', [
             'latestPosts' => $latestPosts,
             'categories' => $categories,
             'images' => $images,
