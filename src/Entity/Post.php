@@ -29,9 +29,19 @@ class Post
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $content;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rating;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbRate = 0;
 
     /**
      * @ORM\Column(type="string", length=255,unique=true)
@@ -367,6 +377,32 @@ class Post
                 $comment->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(int $rating): self
+    {
+        $this->rating = $rating;
+
+        $this->nbRate = $this->getNbRate() + 1;
+
+        return $this;
+    }
+
+    public function getNbRate(): ?int
+    {
+        return $this->nbRate;
+    }
+
+    public function setNbRate(int $nbRate): self
+    {
+        $this->nbRate = $nbRate;
 
         return $this;
     }

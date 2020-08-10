@@ -1,16 +1,15 @@
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" width="200px">
 	<div class="carousel-inner">
 		{% for image in field.value %}
 			<div class="carousel-item {% if loop.first %} active {% endif %} ">
 				<a href="#" class="ea-lightbox-thumbnail" data-featherlight="#ea-lightbox-{{image.id}}" data-featherlight-close-on-click="anywhere">
-					<img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('thumb') }}" class="img-fluid">
+					<img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('medium') }}" class="img-fluid">
 				</a>
 
 				<div id="ea-lightbox-{{image.id}}" class="ea-lightbox">
 					<img src="{{ vich_uploader_asset(image, 'imageFile')}}">
 				</div>
 			</div>
-
 		{% endfor %}
 	</div>
 	<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

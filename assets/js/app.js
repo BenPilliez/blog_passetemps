@@ -15,11 +15,20 @@ import "./modernizr.custom";
 import "./toucheffects";
 import "featherlight/src/featherlight.css";
 import "featherlight/src/featherlight.js";
+import "slick-carousel";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // Activate scrollspy to add active class to navbar items on scroll
 $("body").scrollspy({
   target: "#mainNav",
   offset: 75,
+});
+
+$("[data-slider]").slick({
+  mobileFirst: true,
+  dots: true,
+  arrows: true,
 });
 
 // Collapse Navbar

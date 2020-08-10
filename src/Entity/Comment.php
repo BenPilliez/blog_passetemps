@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -21,6 +24,12 @@ class Comment
      * @ORM\Column(type="string", length=255)
      */
     private $author;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Email()
+     */
+    private $email;
 
     /**
      * @ORM\Column(type="text")
@@ -43,9 +52,16 @@ class Comment
      */
     private $published;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ReplyComment::class, mappedBy="comments")
+     */
+    private $replyComments;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->published = false;
+        $this->replyComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +125,49 @@ class Comment
     public function setPublished(bool $published): self
     {
         $this->published = $published;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReplyComment[]
+     */
+    public function getReplyComments(): Collection
+    {
+        return $this->replyComments;
+    }
+
+    public function addReplyComment(ReplyComment $replyComment): self
+    {
+        if (!$this->replyComments->contains($replyComment)) {
+            $this->replyComments[] = $replyComment;
+            $replyComment->setComments($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReplyComment(ReplyComment $replyComment): self
+    {
+        if ($this->replyComments->contains($replyComment)) {
+            $this->replyComments->removeElement($replyComment);
+            // set the owning side to null (unless already changed)
+            if ($replyComment->getComments() === $this) {
+                $replyComment->setComments(null);
+            }
+        }
 
         return $this;
     }

@@ -55,9 +55,88 @@
 		</div>
 	</header>
 
-	<div class="container">
-		{% autoescape %}
-			{{ post.content|raw }}
-		{% endautoescape %}
-	</div>
-{% endblock %}
+	<section id="show-content">
+		<div class="container ">
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success mt-4">
+					{{ message }}
+				</div>
+			{% endfor %}
+
+			{% if not form.vars.valid %}
+				<div class="alert alert-danger">
+					Erreur
+				</div>
+			{% endif %}
+			<div class="row page-section-4">
+				<div class="col-12">
+					<div class="col-12" data-slider>
+						{% for image in post.images  %}
+							<a href="#" data-featherlight="{{vich_uploader_asset(image, 'imageFile')}}" style="background-image: url({{vich_uploader_asset(image, 'imageFile')}});" class="image-show"></a>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-lg-12-col-md-12 col-sm-12">
+					<h2 class="display-3 mb-4">{{post.title}}</h2>
+					{% autoescape %}
+						{{ post.content|raw }}
+					{% endautoescape %}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<div class="pt-5">
+				<h3 class="mb-5">{{post.comment|length}}
+					commentaires</h3>
+				<ul class="comment-list">
+					{% for comment in post.comment  %}
+						<li class="comment">
+							<div class="comment-body">
+								<h3>{{comment.author}}</h3>
+								<div class="meta">{{comment.createdAt|date('m/d/Y')}}</div>
+								<p>{{comment.content}}</p>
+								<p>
+									<a href="#" class="reply rounded">Reply</a>
+								</p>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<h3>Laisser moi un petit com'</h3>
+
+			{# <div class="comment-form-wrap pt-5">
+																																																																				<h3 class="mb-5">Leave a comment</h3>
+																																																																				<form action="#" class="p-5 bg-light">
+																																																																					<div class="form-group">
+																																																																						<label for="name">Name *</label>
+																																																																						<input type="text" class="form-control" id="name">
+																																																																					</div>
+																																																																					<div class="form-group">
+																																																																						<label for="email">Email *</label>
+																																																																						<input type="email" class="form-control" id="email">
+																																																																					</div>
+																																																																					<div class="form-group">
+																																																																						<label for="website">Website</label>
+																																																																						<input type="url" class="form-control" id="website">
+																																																																					</div>
+																																																															
+																																																																					<div class="form-group">
+																																																																						<label for="message">Message</label>
+																																																																						<textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+																																																																					</div>
+																																																																					<div class="form-group">
+																																																																						<input type="submit" value="Post Comment" class="btn btn-primary">
+																																																																					</div>
+																																																																				</form>
+																																																																			</div> #}
+			<div class="col-12">
+				{{ form(form) }}
+				</div>
+			</div>
+		</section>
+
+	{% endblock %}
