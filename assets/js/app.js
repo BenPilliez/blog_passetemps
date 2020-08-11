@@ -18,7 +18,7 @@ import "featherlight/src/featherlight.js";
 import "slick-carousel";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "rater-jquery";
+import rating from "./module/rating";
 
 // Activate scrollspy to add active class to navbar items on scroll
 $("body").scrollspy({
@@ -64,19 +64,60 @@ window.cookieconsent.initialise({
   location: true,
 });
 
-var options = {
-  max_value: 5,
-  step_size: 0.5,
-  initial_value: 0,
-  selected_symbol_type: "utf8_star", // Must be a key from symbols
-  cursor: "default",
-  readonly: false,
-  change_once: false, // Determines if the rating can only be set once
-  ajax_method: "POST",
-  url: `https://localhost:8000/rating/${$(".rating").attr("id")}`,
-  additional_data: {}, // Additional data to send to the server
-};
+console.log($(".rates"));
+if ($(".rates")) {
+  $.ajax({
+    url: `https://localhost:8000/rating/${$(".rates").attr("data-id")}`,
+    method: "GET",
+    success: function (data) {
+      $(".rates").html(data.template);
+      rating.init(
+        {
+          max_value: 5,
+          step_size: 0.5,
+          initial_value: 0,
+          selected_symbol_type: "utf8_star", // Must be a key from symbols
+          cursor: "default",
+          readonly: true,
+        },
+        ".rating-show"
+      );
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
 
-$(".rating").rate(options);
+rating.init(
+  {
+    max_value: 5,
+    step_size: 0.5,
+    initial_value: 0,
+    selected_symbol_type: "utf8_star", // Must be a key from symbols
+    cursor: "default",
+    readonly: false,
+    change_once: false, // Determines if the rating can only be set once
+    ajax_method: "POST",
+    url: `https://localhost:8000/rating/${$(".rating").attr("id")}`,
+    additional_data: {}, // Additional data to send to the server
+  },
+  ".rating"
+);
+
+$(".rating").on("updateSuccess", function (ev, data) {
+  $(".rates").html(data.template);
+  rating.init(
+    {
+      max_value: 5,
+      step_size: 0.5,
+      initial_value: 0,
+      selected_symbol_type: "utf8_star", // Must be a key from symbols
+      cursor: "default",
+      readonly: true,
+    },
+    ".rating-show"
+  );
+});
 
 console.log("Hello Webpack Encore! Edit me in assets/js/app.js");

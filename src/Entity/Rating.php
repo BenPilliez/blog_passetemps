@@ -18,7 +18,7 @@ class Rating
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $rates;
 
@@ -37,16 +37,17 @@ class Rating
         return $this->id;
     }
 
-    public function getRates(): ?int
+    public function getRates(): ?float
     {
-        if (null !== $this->rates) {
-            return $this->rates / $this->nbRates;
-        }
-
         return $this->rates;
     }
 
-    public function setRates(?int $rates): self
+    public function getCalculateRate(): ?float
+    {
+        return $this->rates / $this->nbRates;
+    }
+
+    public function setRates(?float $rates): self
     {
         $this->rates = $rates;
 
