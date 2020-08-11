@@ -86,14 +86,27 @@
 
 	<section>
 		<div class="container">
-			{{ render(path('comment.list', {id: post.id})) }}
 			<div class="row">
 				<div class="col-4">
-					<h2>Une petite note ?</h2>
-					<div class="rating" data-rate-value="0" id=" {{post.id}} "></div>
+					<h2>Une petite note ?
+						<div class="rating" data-rate-value="0" id=" {{post.id}} "></div>
+					</h2>
 				</div>
 			</div>
 			{{ render(controller('App\\Controller\\Blog\\CommentController::commentForm',  {id: post.id, title: "Laisser moi un petit com'", form_id: "new-" ~ post.id, path: "comment.new"}))  }}
+			<div class="pt-5 d-flex flex-column comments" data-url="https://localhost:8000/comment/list/{{post.id}}">
+				<h3 class="mb-5">{{comments.getTotalItemCount}}
+					commentaires</h3>
+				<ul class="comment-list">
+					{% include "blog/post/_comments.html.twig" with {comments:comments} %}
+				</ul>
+			</div>
+
 		</div>
-	</section>
-{% endblock %}
+
+		<div class="pagination justify-content-center">
+			{{ knp_pagination_render(comments) }}
+		</div>
+	</div>
+
+</div></section>{% endblock %}

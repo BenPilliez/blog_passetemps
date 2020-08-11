@@ -64,7 +64,6 @@ window.cookieconsent.initialise({
   location: true,
 });
 
-console.log($(".rates"));
 if ($(".rates")) {
   $.ajax({
     url: `https://localhost:8000/rating/${$(".rates").attr("data-id")}`,
@@ -118,6 +117,35 @@ $(".rating").on("updateSuccess", function (ev, data) {
     },
     ".rating-show"
   );
+});
+
+if ($(".comments").length) {
+  $.ajax({
+    url: $(".comments").attr("data-url"),
+    method: "GET",
+    success: function (data) {
+      $(".comments").html(data.template);
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
+
+$("ul.pagination a ").click((e) => {
+  e.preventDefault();
+
+  $.ajax({
+    url: e.target.href,
+    method: "GET",
+    success: function (data) {
+      $(".cs-style-2").html(data.template);
+      $(".paginationDiv").html(data.pagination);
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
 });
 
 console.log("Hello Webpack Encore! Edit me in assets/js/app.js");

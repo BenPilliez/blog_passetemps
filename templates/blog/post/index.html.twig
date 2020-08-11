@@ -12,23 +12,14 @@
 			<div class="row">
 				<div class="col-12">
 					<ul class="grid cs-style-2">
-						{% for post in posts  %}
-							<li>
-								<figure>
-									<img src="{{vich_uploader_asset(post, 'thumbnailFile') | imagine_filter('medium')}}" alt="image-{{post.title}}">
-									<figcaption>
-										<h3>{{post.title}}</h3>
-										<a href="{{path('post.show', {id: post.id, slug: post.slug})}}">Voir l'article</a>
-									</figcaption>
-								</figure>
-							</li>
-						{% endfor %}
+						{% include "blog/post/_postLoop.html.twig" with {posts:posts} %}
 					</ul>
+					<div class="paginationDiv justify-content-center">
+						{{ knp_pagination_render(posts) }}
+					</div>
 				</div>
 			</div>
-			<div class="pagination justify-content-center">
-				{{ knp_pagination_render(posts) }}
-			</div>
+
 		</div>
 	</section>
 

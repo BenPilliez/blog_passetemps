@@ -9,6 +9,7 @@ use App\Notification\Notification;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -101,8 +102,19 @@ class CommentController extends AbstractController
         $request = Request::createFromGlobals();
         $comment = $this->repository->paginateComment($post->getComment(), $request->query->get('page', 1));
 
-        return $this->render('blog/post/_comments.html.twig', [
-            'comments' => $comment,
-        ]);
+        $comment->setUsedRoute('comment.list');
+
+        //ajax request
+        if ($request->isXmlHttpRequest()) {
+            $template = $this->render('blog/post/_comments.html.twig', [
+                'comments' => $comment,
+            ])->getContent();
+            $response = new JsonResponse();
+            $response->setStatusCode(200);
+
+            return $response->setData(['template' => $template]);
+        }
+
+        return $comment;
     }
 }
