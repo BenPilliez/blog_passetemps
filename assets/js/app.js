@@ -64,7 +64,7 @@ window.cookieconsent.initialise({
   location: true,
 });
 
-if ($(".rates")) {
+if ($(".rates").length) {
   $.ajax({
     url: `https://localhost:8000/rating/${$(".rates").attr("data-id")}`,
     method: "GET",
@@ -119,27 +119,21 @@ $(".rating").on("updateSuccess", function (ev, data) {
   );
 });
 
-if ($(".comments").length) {
-  $.ajax({
-    url: $(".comments").attr("data-url"),
-    method: "GET",
-    success: function (data) {
-      $(".comments").html(data.template);
-    },
-    error: function (error) {
-      console.log(error);
-    },
-  });
-}
-
 $("ul.pagination a ").click((e) => {
   e.preventDefault();
+  console.log("bite");
 
   $.ajax({
     url: e.target.href,
     method: "GET",
     success: function (data) {
-      $(".cs-style-2").html(data.template);
+      if ($(".cs-style-2").length) {
+        $(".cs-style-2").html(data.template);
+      }
+
+      if ($(".comment-list").length) {
+        $(".comment-list").html(data.template);
+      }
       $(".paginationDiv").html(data.pagination);
     },
     error: function (error) {
