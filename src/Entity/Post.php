@@ -34,16 +34,6 @@ class Post
     private $content;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $rating;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $nbRate = 0;
-
-    /**
      * @ORM\Column(type="string", length=255,unique=true)
      * @Gedmo\Slug(fields={"title"})
      */
@@ -112,6 +102,11 @@ class Post
      * @Vich\UploadableField(mapping="thumbnails", fileNameProperty="thumbnail")
      */
     private $thumbnailFile;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Rating::class, cascade={"persist", "remove"})
+     */
+    private $rates;
 
     public function __construct()
     {
@@ -381,28 +376,14 @@ class Post
         return $this;
     }
 
-    public function getRating(): ?int
+    public function getRates(): ?Rating
     {
-        return $this->rating;
+        return $this->rates;
     }
 
-    public function setRating(int $rating): self
+    public function setRates(?Rating $rates): self
     {
-        $this->rating = $rating;
-
-        $this->nbRate = $this->getNbRate() + 1;
-
-        return $this;
-    }
-
-    public function getNbRate(): ?int
-    {
-        return $this->nbRate;
-    }
-
-    public function setNbRate(int $nbRate): self
-    {
-        $this->nbRate = $nbRate;
+        $this->rates = $rates;
 
         return $this;
     }

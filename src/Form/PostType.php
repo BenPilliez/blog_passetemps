@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Post;
+use blackknight467\StarRatingBundle\Form\RatingType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -12,15 +13,7 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('content')
-            ->add('slug')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('thumbnail')
-            ->add('published')
-            ->add('categories')
-            ->add('tags')
+            ->add('stars', RatingType::class)
         ;
     }
 

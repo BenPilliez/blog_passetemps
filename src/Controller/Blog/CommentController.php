@@ -94,12 +94,12 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/list/{id}", name="comment.list")
+     * @Route("/list/{id}", name="comment.list", methods={"GET"})
      */
     public function list(Post $post, Request $request)
     {
         $request = Request::createFromGlobals();
-        $comment = $this->repository->paginateComment($post->getComment(), $request->query->get('page'));
+        $comment = $this->repository->paginateComment($post->getComment(), $request->query->get('page', 1));
 
         return $this->render('blog/post/_comments.html.twig', [
             'comments' => $comment,
