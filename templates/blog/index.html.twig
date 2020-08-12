@@ -32,17 +32,24 @@
 		<div class="container-fluid ">
 			<div class="row">
 				<ul class="grid cs-style-2">
-					{% for post in latestPosts  %}
-						<li>
-							<figure>
-								<img src="{{vich_uploader_asset(post, 'thumbnailFile') | imagine_filter('medium')}}" alt="image-{{post.title}}">
-								<figcaption>
-									<h3>{{post.title}}</h3>
-									<a href="{{path('post.show', {id: post.id, slug: post.slug})}}">Voir l'article</a>
-								</figcaption>
-							</figure>
-						</li>
-					{% endfor %}
+					{% if latestPosts|length > 0 %}
+
+						{% for post in latestPosts  %}
+							<li>
+								<figure>
+									<img src="{{vich_uploader_asset(post, 'thumbnailFile') | imagine_filter('medium')}}" alt="image-{{post.title}}">
+									<figcaption>
+										<h3>{{post.title}}</h3>
+										<a href="{{path('post.show', {id: post.id, slug: post.slug})}}">Voir l'article</a>
+									</figcaption>
+								</figure>
+							</li>
+						{% endfor %}
+					{% else %}
+						<h3>
+							J'y travaille, mollo l'asticot ! Ça prend du temps de faire les choses biens !</h3>
+					{% endif %}
+
 				</ul>
 			</div>
 		</div>
