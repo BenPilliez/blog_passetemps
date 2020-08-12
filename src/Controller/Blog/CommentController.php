@@ -8,6 +8,7 @@ use App\Form\CommentType;
 use App\Notification\Notification;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\PaginatorBundle\Helper\Processor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommentController extends AbstractController
 {
-    public function __construct(CommentRepository $repository, EntityManagerInterface $em)
+    public function __construct(CommentRepository $repository, EntityManagerInterface $em, Processor $processor)
     {
         $this->repository = $repository;
         $this->em = $em;
+        $this->processor = $processor;
     }
 
     public function commentForm(Request $request)
@@ -109,10 +111,13 @@ class CommentController extends AbstractController
             $template = $this->render('blog/post/_comments.html.twig', [
                 'comments' => $comment,
             ])->getContent();
+            $paginationContext = $this->processor->render($comment);
+            $twig = $this->get('twig');
+            $paginationHtml = $twig->render($comment->getTemplate(), $paginationContext);
             $response = new JsonResponse();
             $response->setStatusCode(200);
 
-            return $response->setData(['template' => $template]);
+            return $response->setData(['template' => $template, 'pagination' => $paginationHtml]);
         }
 
         return $comment;

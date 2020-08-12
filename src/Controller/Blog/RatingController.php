@@ -22,7 +22,7 @@ class RatingController extends AbstractController
         $rate = $post->getRates() ? $post->getRates()->getCalculateRate() : 0;
         $nbRate = $post->getRates() ? $post->getRates()->getNbRates() : 0;
 
-        $template = $this->render('_rating.html.twig', [
+        $template = $this->render('blog/post/_rating.html.twig', [
             'rate' => $rate,
             'nbRates' => $nbRate,
             'id' => $post->getId(),
@@ -32,12 +32,6 @@ class RatingController extends AbstractController
         $response->setStatusCode(200);
 
         return $response->setData(['template' => $template]);
-
-        return $this->render('_rating.html.twig', [
-            'id' => $post->getId(),
-            'rate' => $rate,
-            'nbRates' => $nbRate,
-        ]);
     }
 
     /**
@@ -67,7 +61,7 @@ class RatingController extends AbstractController
             $em->flush();
         }
 
-        $template = $this->render('_rating.html.twig', [
+        $template = $this->render('blog/post/_rating.html.twig', [
             'rate' => $rate->getCalculateRate(),
             'nbRates' => $rate->getNbRates(),
             'id' => $post->getId(),

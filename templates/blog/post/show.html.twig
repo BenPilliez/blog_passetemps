@@ -79,6 +79,17 @@
 					{% autoescape %}
 						{{ post.content|raw }}
 					{% endautoescape %}
+
+					<p class="text-muted mt-4 font-italic">Catégorie:
+						<a class="text-muted" href="{{path('post.index', {id: post.categories.id})}}">
+							{{post.categories.name}}
+						</a>
+						Tags:
+						{% for tag in post.tags  %}
+							<span class="text-muted">
+								{{tag.name}}</span>
+						{% endfor %}
+					</p>
 				</div>
 			</div>
 		</div>

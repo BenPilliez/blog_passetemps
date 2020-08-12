@@ -1,0 +1,19 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>Oops la page demandé n'existe pas
+				</h1>
+
+				<p>
+					<img src="/images/404-error.jpg" alt="error-404">
+					<a class="btn btn-default" href="{{ path('index') }}">Retour à la page d'acceuil</a>.
+				</p>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,8 +1,9 @@
 {% for comment in comments  %}
 	<li class="comment">
 		<div class="comment-body">
-			<h3 class="display-1">{{comment.author}}</h3>
-			<div class="meta">{{comment.createdAt|date('m/d/Y')}}</div>
+			<h3 class="display-1">{{comment.author}}&nbsp;
+				<span class="meta">{{comment.createdAt|date('m/d/Y')}}</span>
+			</h3>
 			<p>{{comment.content}}</p>
 			<p>
 				<a class="btn btn-success" data-form id="{{comment.id}}">Répondre</a>
@@ -12,8 +13,9 @@
 					{% for children in comment.commentChildrens  %}
 						<li class="comment">
 							<div class="comment-body">
-								<h3>{{children.author}}</h3>
-								<div class="meta">{{children.createdAt|date('m/d/Y')}}</div>
+								<h3>{{children.author}}&nbsp;
+									<span class="meta">{{children.createdAt|date('m/d/Y')}}</span>
+								</h3>
 								<p>{{children.content}}</p>
 							</div>
 						</li>
