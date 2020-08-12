@@ -25,6 +25,31 @@ class PostController extends AbstractController
     }
 
     /**
+     * @Route("/tag", name="post.tag")
+     */
+    public function IndexbyTag(Request $request)
+    {
+        $post = $this->repository->findByTag($request->query->getInt('tag_id'), $request->query->getInt('page', 1));
+
+        if ($request->isXmlHttpRequest()) {
+            $template = $this->render('blog/post/_postLoop.html.twig', [
+                'posts' => $post,
+            ])->getContent();
+            $paginationContext = $this->processor->render($post);
+            $twig = $this->get('twig');
+            $paginationHtml = $twig->render($post->getTemplate(), $paginationContext);
+            $response = new JsonResponse();
+            $response->setStatusCode(200);
+
+            return $response->setData(['template' => $template, 'pagination' => $paginationHtml]);
+        }
+
+        return $this->render('blog/post/index.html.twig', [
+            'posts' => $post,
+        ]);
+    }
+
+    /**
      * @Route("/", name="post.index", methods={"GET"})
      */
     public function index(Request $request): Response

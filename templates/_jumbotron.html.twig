@@ -9,7 +9,11 @@
 				{% if category is defined %}
 					<p class="text-white mb-5 font-italic font-weight-light text-left">Catégorie:
 						{{category}}</p>
+				{% elseif tag is defined %}
+					<p class="text-white mb-5 font-italic font-weight-light text-left">Tag:
+						{{tag}}</p>
 				{% else %}
+
 					<p class="text-white mb-5">Je parlerais ici, de mes passe-temps malgrès ma fibro, c'est eux qui me permette de tenir</p>
 				{% endif %}
 			</div>

@@ -55,4 +55,19 @@ class PostRepository extends ServiceEntityRepository
             12
         );
     }
+
+    public function findByTag(int $idTag, int $page): PaginationInterface
+    {
+        $query = $this->findPublished()
+            ->innerJoin('p.tags', 't')
+            ->andWhere('t.id = :idTag')
+            ->setParameter(':idTag', $idTag)
+        ;
+
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $page,
+            5
+        );
+    }
 }

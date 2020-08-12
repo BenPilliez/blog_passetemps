@@ -6,7 +6,16 @@
 
 {% block body %}
 
-	{% include "_jumbotron.html.twig" with posts[0] ?  {category : posts[0].categories.name }  %}
+	{% set currentPath = path(app.request.attributes.get('_route'),
+                       app.request.attributes.get('_route_params')) %}
+
+	{% if currentPath == "/post/tag" %}
+		{% include "_jumbotron.html.twig" with posts[0] ?  {tag : posts[0].tags[0].name }  %}
+	{% else %}
+		{% include "_jumbotron.html.twig" with posts[0] ?  {category : posts[0].categories.name }  %}
+
+	{% endif %}
+
 	<section id="lastPost" class="bg-light page-section">
 		<div class="container-fluid ">
 			<div class="row">
@@ -19,9 +28,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</section>
-
-
 {% endblock %}

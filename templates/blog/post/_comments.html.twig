@@ -11,7 +11,13 @@
 			{% if comment.commentChildrens %}
 				<ul class="children">
 					{% for children in comment.commentChildrens  %}
-						<li class="comment">
+						<p>
+							<a class="btn btn-default" data-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" aria-controls="collapseComment">
+								{{comment.commentChildrens | length}}
+								commentaires
+							</a>
+						</p>
+						<li class="comment collapse" id="collapseComment">
 							<div class="comment-body">
 								<h3>{{children.author}}&nbsp;
 									<span class="meta">{{children.createdAt|date('m/d/Y')}}</span>

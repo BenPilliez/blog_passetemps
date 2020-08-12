@@ -2,15 +2,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="container">
+	<div class="container mt-5">
 		<div class="row">
 			<div class="col-12">
-				<h1>Oops la page demandé n'existe pas
+				<h1>Oops Un truc à merdé là
 				</h1>
 
+				<img src="/images/erreur-500.png" alt="error-500">
 				<p>
-					<img src="/images/404-error.jpg" alt="error-404">
-					<a class="btn btn-default" href="{{ path('index') }}">Retour à la page d'acceuil</a>.
+
+					<a class="btn btn-primary mt-4" href="{{ path('index') }}">Retour à la page d'acceuil</a>
 				</p>
 			</div>
 		</div>
