@@ -6,18 +6,34 @@
 {% block body %}
 	{% include "_jumbotron.html.twig" %}
 
+
 	<div class="container">
 		<div class="row page-section">
 
-			<div class="col-sm-12 col-lg-6 text-center">
-				<img src="{{vich_uploader_asset(about, "avatarFile")}}" alt="" title="" media-simple="true">
-			</div>
-			<div class="col-sm-12 col-lg-6 mt-sm-5">
-				<h2 class="display-7 text-center">Parlons un peu de moi</h2>
-				{% autoescape  %}
-					{{about.content|raw}}
-				{% endautoescape %}
-			</div>
+			{% if about is not null %}
+				<div class="col-sm-12 col-lg-6 text-center">
+					{% if about.avatar is not null %}
+						<img src="{{vich_uploader_asset(about, "avatarFile")}}" alt="" title="" media-simple="true">
+					{% else %}
+						<img src="{{"/images/avatar.png"}}" alt="" title="" media-simple="true">
+					{% endif %}
+				</div>
+				<div class="col-sm-12 col-lg-6 mt-sm-5">
+					<h2 class="display-7 text-center">Parlons un peu de moi</h2>
+					{% autoescape  %}
+						{{about.content|raw}}
+					{% endautoescape %}
+				</div>
+			{% else %}
+				<div class="col-sm-12 col-lg-6 text-center">
+					<img src="{{"/images/avatar.png"}}" alt="" title="" media-simple="true">
+				</div>
+				<div class="col-sm-12 col-lg-6 mt-sm-5">
+					<h2 class="display-7 text-center">Parlons un peu de moi</h2>
+					Un peu de patience, cela ne va pas tarder !
+				</div>
+			{% endif %}
+
 
 		</div>
 	</div>
