@@ -19,7 +19,7 @@ class UserFixtures extends Fixture
         $user = new User();
         $user->setUsername('madeleine.f');
         $user->setEmail('madeleine.f@live.fr');
-        $user->setPassword($this->encoder->encodePassword($user, 'ClemBen59'));
+        $user->setPassword($this->encoder->encodePassword($user, 'aze'));
         $manager->persist($user);
         $manager->flush();
     }
