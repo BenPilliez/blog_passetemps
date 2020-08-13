@@ -13,15 +13,15 @@
 				<div class="col-lg-8 text-center">
 					<h2 class="text-white mt-0">A propos de moi</h2>
 					<hr class="divider light my-4"/>
-					<p class="text-white-50 mb-4">
+					<div class="text-white-50 mb-4 about">
 						{% if about is not null %}
 							{% autoescape  %}
-								{{about.content|raw}}
+								{{about.content|striptags|u.truncate(250, '...')|raw}}
 							{% endautoescape %}
 						{% else %}
 							Je ne me suis pas encore décrit, mais ça ne va pas tarder
 						{% endif %}
-					</p>
+					</div>
 					<a class="btn btn-light btn-xl js-scroll-trigger" href="{{path('about')}}">En savoir un peu plus</a>
 				</div>
 			</div>
@@ -29,8 +29,8 @@
 	</section>
 
 	<section id="lastPost" class="bg-light page-section">
-		<div class="container-fluid contenedor text-center ">
-			<div class="container">
+		<div class="container contenedor text-center ">
+			<div class="row">
 				{% if latestPosts|length > 0 %}
 
 					{% include "blog/post/_postLoop.html.twig" with {posts:latestPosts} %}
