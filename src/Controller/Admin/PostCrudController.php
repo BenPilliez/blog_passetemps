@@ -56,8 +56,8 @@ class PostCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $imageFile = ImageField::new('thumbnailFile')->setFormType(VichImageType::class);
-        $image = ImageField::new('thumbnail')->setBasePath('/media/posts');
+        $imageFile = ImageField::new('thumbnailFile', 'Miniature')->setFormType(VichImageType::class);
+        $image = ImageField::new('thumbnail', 'Miniature')->setBasePath('/media/posts');
 
         $id = IdField::new('id');
         $published = BooleanField::new('published', 'Publier');

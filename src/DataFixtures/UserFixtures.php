@@ -18,8 +18,13 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $user->setUsername('madeleine.f');
+<<<<<<< HEAD
         $user->setEmail('benjamin.pilliez@sfr.fr');
         $user->setPassword($this->encoder->encodePassword($user, 'ClemBen59'));
+=======
+        $user->setEmail('madeleine.f@live.fr');
+        $user->setPassword($this->encoder->encodePassword($user, 'aze'));
+>>>>>>> 4a71aabf5aa4643d68b9dbfbca69e0fc936990c5
         $manager->persist($user);
         $manager->flush();
     }

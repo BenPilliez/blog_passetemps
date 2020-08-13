@@ -47,8 +47,8 @@ class CategoryCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $jumbotronFile = ImageField::new('jumbotronFile')->setFormType(VichImageType::class);
-        $jumbotron = ImageField::new('jumbotron')->setBasePath('media/jumbotrons');
+        $jumbotronFile = ImageField::new('jumbotronFile', 'Image de fond')->setFormType(VichImageType::class);
+        $jumbotron = ImageField::new('jumbotron', 'Image de fond')->setBasePath('media/jumbotrons');
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [TextField::new('name'),

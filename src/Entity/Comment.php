@@ -22,6 +22,7 @@ class Comment
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message="Le champ auteur ne peut être vide")
      */
     private $author;
 
@@ -33,6 +34,7 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotNull(message="Le champ contenu ne peut être vide")
      */
     private $content;
 

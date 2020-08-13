@@ -72,53 +72,53 @@
 
 				</div>
 
-				<div class="col-lg-8-col-md-8 col-sm-12">
+				<div class="col-lg-12 col-md-12 col-sm-12">
 					<h2 class="display-3 mb-4 ">{{post.title}}
-						<div class="rates d-flex" data-id="{{post.id}}"></div>
 					</h2>
-					{% autoescape %}
-						{{ post.content|raw }}
-					{% endautoescape %}
+					<div id="content-post">
+						{% autoescape %}
+							{{ post.content|raw }}
+						{% endautoescape %}
+					</div>
 
 					<p class="text-muted mt-4 font-italic">Catégorie:
-						<a class="text-muted" href="{{path('post.index', {id: post.categories.id})}}">
+						<a href="{{path('post.index', {id: post.categories.id})}}">
 							{{post.categories.name}}
 						</a>
 						Tags:
 						{% for tag in post.tags  %}
-							<a class="text-muted" href="{{path('post.tag', {tag_id: tag.id})}}">
+							<a href="{{path('post.tag', {tag_id: tag.id})}}">
 								{{tag.name}}
 							</a>
 						{% endfor %}
+						<div class="rates-stars">
+							<div class="rates d-flex" data-id="{{post.id}}"></div>
+						</div>
 					</p>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section>
-		<div class="container">
-			<div class="row">
-				<div class="col-4">
-					<h2>Une petite note ?
-						<div class="rating" data-rate-value="0" id=" {{post.id}} "></div>
-					</h2>
-				</div>
-			</div>
-			{{ render(controller('App\\Controller\\Blog\\CommentController::commentForm',  {id: post.id, title: "Laisser moi un petit com'", form_id: "new-" ~ post.id, path: "comment.new"}))  }}
+
+	<div class="container">
+		{% if comments.getTotalItemCount > 0 %}
 			<div class="pt-5 d-flex flex-column comments" data-url="https://localhost:8000/comment/list/{{post.id}}">
 				<h3 class="mb-5">{{comments.getTotalItemCount}}
 					commentaires</h3>
 				<ul class="comment-list">
 					{% include "blog/post/_comments.html.twig" with {comments:comments} %}
 				</ul>
+				<div class="pagination justify-content-center">
+					{{ knp_pagination_render(comments) }}
+				</div>
 			</div>
-
+		{% endif %}
+		<div class="col-12 rates-stars">
+			<div class="rating" data-rate-value="0" id=" {{post.id}} "></div>
 		</div>
-
-		<div class="pagination justify-content-center">
-			{{ knp_pagination_render(comments) }}
-		</div>
+		{{ render(controller('App\\Controller\\Blog\\CommentController::commentForm',  {id: post.id, form_id: "new-" ~ post.id, path: "comment.new"}))  }}
 	</div>
 
-</div></section>{% endblock %}
+
+{% endblock %}

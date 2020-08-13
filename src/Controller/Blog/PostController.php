@@ -3,6 +3,7 @@
 namespace App\Controller\Blog;
 
 use App\Entity\Post;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Helper\Processor;
@@ -52,9 +53,18 @@ class PostController extends AbstractController
     /**
      * @Route("/", name="post.index", methods={"GET"})
      */
-    public function index(Request $request): Response
+    public function index(Request $request, CategoryRepository $categoryRepository): Response
     {
         $post = $this->repository->findByCategory($request->query->get('id'), $request->query->getInt('page', 1));
+
+        if (0 === count($post->getItems())) {
+            $category = $categoryRepository->find($request->query->get('id'));
+
+            return $this->render('blog/post/index.html.twig', [
+                'posts' => $post,
+                'category' => $category,
+            ]);
+        }
 
         if ($request->isXmlHttpRequest()) {
             $template = $this->render('blog/post/_postLoop.html.twig', [

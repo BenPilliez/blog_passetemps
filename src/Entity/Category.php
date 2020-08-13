@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -24,6 +25,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
+     *@Assert\NotNull(message="Maman, Il faut que tu lui donne un nom")
      */
     private $name;
 
@@ -40,6 +42,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message="Maman, il faut lui attribuer une couleur")
      */
     private $color;
 
@@ -50,6 +53,7 @@ class Category
 
     /**
      * @Vich\UploadableField(mapping="jumbotrons", fileNameProperty="jumbotron")
+     * @Assert\NotNull(message="Maman, il faut que tu lui ajoute une image de fond")
      */
     private $jumbotronFile;
 
