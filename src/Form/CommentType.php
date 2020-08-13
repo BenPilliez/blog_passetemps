@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Comment;
-use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
-use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,22 +17,28 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('author', TextType::class, [
-                'label' => 'Nom',
+                'label' => false,
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'Nom',
+                ],
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Adresse mail',
+                'label' => false,
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'Email',
+                ],
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Message',
+                'label' => false,
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'Contenu',
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
-            ])->add('captcha', Recaptcha3Type::class, [
-                'constraints' => new Recaptcha3(),
-                'action_name' => 'commentform',
             ])
         ;
     }

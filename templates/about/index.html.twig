@@ -20,9 +20,12 @@
 				</div>
 				<div class="col-sm-12 col-lg-6 mt-sm-5">
 					<h2 class="display-7 text-center">Parlons un peu de moi</h2>
-					{% autoescape  %}
-						{{about.content|raw}}
-					{% endautoescape %}
+					<div style="font-size: 2.5rem;">
+						{% autoescape  %}
+							{{about.content|raw}}
+						{% endautoescape %}
+					</div>
+
 				</div>
 			{% else %}
 				<div class="col-sm-12 col-lg-6 text-center">
@@ -30,11 +33,11 @@
 				</div>
 				<div class="col-sm-12 col-lg-6 mt-sm-5">
 					<h2 class="display-7 text-center">Parlons un peu de moi</h2>
-					Un peu de patience, cela ne va pas tarder !
+					<div style="font-size: 2.5rem;">
+						Un peu de patience, cela ne va pas tarder !
+					</div>
 				</div>
 			{% endif %}
-
-
 		</div>
 	</div>
 {% endblock %}
