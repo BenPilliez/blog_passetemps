@@ -29,28 +29,17 @@
 	</section>
 
 	<section id="lastPost" class="bg-light page-section">
-		<div class="container-fluid ">
-			<div class="row">
-				<ul class="grid cs-style-2">
-					{% if latestPosts|length > 0 %}
+		<div class="container-fluid contenedor text-center ">
+			<div class="container">
+				{% if latestPosts|length > 0 %}
 
-						{% for post in latestPosts  %}
-							<li>
-								<figure>
-									<img src="{{vich_uploader_asset(post, 'thumbnailFile') | imagine_filter('medium')}}" alt="image-{{post.title}}">
-									<figcaption>
-										<h3>{{post.title}}</h3>
-										<a href="{{path('post.show', {id: post.id, slug: post.slug})}}">Voir l'article</a>
-									</figcaption>
-								</figure>
-							</li>
-						{% endfor %}
-					{% else %}
-						<h3>
-							J'y travaille, mollo l'asticot ! Ça prend du temps de faire les choses biens !</h3>
-					{% endif %}
+					{% include "blog/post/_postLoop.html.twig" with {posts:latestPosts} %}
 
-				</ul>
+				{% else %}
+					<h3>
+						J'y travaille, mollo l'asticot ! Ça prend du temps de faire les choses biens !</h3>
+				{% endif %}
+
 			</div>
 		</div>
 	</section>

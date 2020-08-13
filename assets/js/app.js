@@ -11,8 +11,6 @@ import $ from "jquery";
 import "bootstrap";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import "./module/modernizr.custom";
-import "./module/toucheffects";
 import "featherlight/src/featherlight.css";
 import "featherlight/src/featherlight.js";
 import slider from "./module/slider";

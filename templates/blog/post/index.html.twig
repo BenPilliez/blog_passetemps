@@ -18,23 +18,20 @@
 	{% endif %}
 
 	<section id="lastPost" class="bg-light page-section">
-		<div class="container-fluid ">
-			<div class="row">
-				<div class="col-12">
-					<ul class="grid cs-style-2">
-						{% if posts.getTotalItemCount > 0 %}
-							{% include "blog/post/_postLoop.html.twig" with {posts:posts} %}
-						{% else %}
-							<h3>Il n'y a pas de post pour le moment, mais ça va venir !
-							</h3>
-						{% endif %}
 
-					</ul>
-					<div class="pagination justify-content-center">
-						{{ knp_pagination_render(posts) }}
-					</div>
-				</div>
+		<div class="container contenedor  text-center">
+			<div class="row">
+				{% if posts.getTotalItemCount > 0 %}
+					{% include "blog/post/_postLoop.html.twig" with {posts:posts} %}
+				{% else %}
+					<h3>Il n'y a pas de post pour le moment, mais ça va venir !
+					</h3>
+				{% endif %}
+			</div>
+			<div class="pagination justify-content-center">
+				{{ knp_pagination_render(posts) }}
 			</div>
 		</div>
+
 	</section>
 {% endblock %}
