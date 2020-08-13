@@ -11,9 +11,10 @@
 
 	{% if currentPath == "/post/tag" %}
 		{% include "_jumbotron.html.twig" with posts[0] ?  {tag : posts[0].tags[0].name }  %}
-	{% else %}
+	{% elseif posts.getTotalItemCount > 0 %}
 		{% include "_jumbotron.html.twig" with posts[0] ?  {category : posts[0].categories.name }  %}
-
+	{% else %}
+		{% include "_jumbotron.html.twig" with {category : category.name }  %}
 	{% endif %}
 
 	<section id="lastPost" class="bg-light page-section">
@@ -21,7 +22,13 @@
 			<div class="row">
 				<div class="col-12">
 					<ul class="grid cs-style-2">
-						{% include "blog/post/_postLoop.html.twig" with {posts:posts} %}
+						{% if posts.getTotalItemCount > 0 %}
+							{% include "blog/post/_postLoop.html.twig" with {posts:posts} %}
+						{% else %}
+							<h3>Il n'y a pas de post pour le moment, mais ça va venir !
+							</h3>
+						{% endif %}
+
 					</ul>
 					<div class="pagination justify-content-center">
 						{{ knp_pagination_render(posts) }}

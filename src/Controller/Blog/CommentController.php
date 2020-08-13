@@ -34,7 +34,7 @@ class CommentController extends AbstractController
 
         $id = $request->get('id');
 
-        $hidden = $request->get('hidden');
+        $class = $request->get('class');
         $title = $request->get('title');
         $path = $request->get('path');
         $form_id = $request->get('form_id');
@@ -42,7 +42,7 @@ class CommentController extends AbstractController
         return $this->render('blog/post/_commentForm.html.twig', [
             'form' => $form->createView(),
             'id' => $id,
-            'hidden' => $hidden,
+            'class' => $class,
             'title' => $title,
             'path' => $path,
             'form_id' => $form_id,

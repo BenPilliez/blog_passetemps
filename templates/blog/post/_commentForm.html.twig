@@ -1,22 +1,19 @@
-<div class="col-12">
+{% if title %}
+	<h3>{{title}}</h3>
 
-	{% if title %}
-		<h3>{{title}}</h3>
+{% endif %}
 
-	{% endif %}
-
-	{{ form_start(form, {action: path(path, {id: id}), attr: {class: hidden, id:form_id } }) }}
-	<div class="form-group">
-		{{form_row(form.author)}}
-	</div>
-	<div class="form-group">
-		{{form_row(form.email)}}
-	</div>
-	<div class="form-group">
-		{{form_row(form.content)}}
-	</div>
-	<div class="form-group">
-		{{form_row(form.submit)}}
-	</div>
-	{{form_end(form)}}
+{{ form_start(form, {action: path(path, {id: id}), attr: {class: class, id:form_id } }) }}
+<div class="form-group">
+	{{form_row(form.author)}}
 </div>
+<div class="form-group">
+	{{form_row(form.email)}}
+</div>
+<div class="form-group">
+	{{form_row(form.content)}}
+</div>
+<div class="form-group">
+	{{form_row(form.submit)}}
+</div>
+{{form_end(form)}}

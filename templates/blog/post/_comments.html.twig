@@ -7,7 +7,7 @@
 			<p>{{comment.content}}</p>
 			<p>
 				<a class="btn btn-success" data-form id="{{comment.id}}">Répondre</a>
-				{{ render(controller('App\\Controller\\Blog\\CommentController::commentForm',  {hidden: 'hidden-form',id: comment.id, form_id: "comment-" ~ comment.id, path: 'comment.edit'}))  }}</p>
+				{{ render(controller('App\\Controller\\Blog\\CommentController::commentForm',  {class: 'hidden-form p-5 bg-light',id: comment.id, form_id: "comment-" ~ comment.id, path: 'comment.edit'}))  }}</p>
 			{% if comment.commentChildrens %}
 				<ul class="children">
 					{% for children in comment.commentChildrens  %}
