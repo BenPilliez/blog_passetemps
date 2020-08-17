@@ -3,7 +3,6 @@
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     background-color: #fff;
     transition: background-color 0.2s ease;
-    height: 130px;
   }
 
   #mainNav .navbar-brand {
@@ -12,12 +11,9 @@
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
       "Noto Color Emoji";
     font-weight: 700;
-    font-size: 3rem !important;
     color: #212529;
   }
-  #mainNav button {
-    font-size: 3rem !important;
-  }
+
   #mainNav .navbar-nav .nav-item .nav-link {
     color: #6c757d;
     font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont,
@@ -25,7 +21,6 @@
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
       "Noto Color Emoji";
     font-weight: 700;
-    font-size: 2rem !important;
     padding: 1rem !important;
   }
   #mainNav .navbar-nav .nav-item .nav-link:hover,

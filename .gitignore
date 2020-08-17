@@ -8,6 +8,8 @@
 /var/
 /vendor/
 .env
+.idea
+.idea/workspace.xml
 /public/media/posts/*
 ###< symfony/framework-bundle ###
 

@@ -13,9 +13,9 @@
 			{% if about is not null %}
 				<div class="col-sm-12 col-lg-6 text-center">
 					{% if about.avatar is not null %}
-						<img src="{{vich_uploader_asset(about, "avatarFile")}}" alt="" title="" media-simple="true">
+						<img src="{{vich_uploader_asset(about, "avatarFile")}}" alt="" title="" media-simple="true" style="width: 100%;">
 					{% else %}
-						<img src="{{"/images/avatar.png"}}" alt="" title="" media-simple="true">
+						<img src="{{"/images/avatar.png"}}" alt="" title="" media-simple="true" style="width: 100%;">
 					{% endif %}
 				</div>
 				<div class="col-sm-12 col-lg-6 mt-sm-5">
