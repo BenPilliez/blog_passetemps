@@ -53,7 +53,7 @@ class Category
 
     /**
      * @Vich\UploadableField(mapping="jumbotrons", fileNameProperty="jumbotron")
-     * @Assert\NotNull(message="Maman, il faut que tu lui ajoute une image de fond")
+     *
      */
     private $jumbotronFile;
 

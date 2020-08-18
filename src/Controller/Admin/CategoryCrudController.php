@@ -42,6 +42,7 @@ class CategoryCrudController extends AbstractCrudController
         // (see https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/tutorials/pagination.html)
             ->setPaginatorUseOutputWalkers(true)
             ->setPaginatorFetchJoinCollection(true)
+            ->showEntityActionsAsDropdown()
     ;
     }
 
@@ -62,15 +63,4 @@ class CategoryCrudController extends AbstractCrudController
         ];
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions
-            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
-                return $action->setCssClass('btn btn-primary');
-            })
-            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
-                return $action->setCssClass('btn btn-danger');
-            })
-        ;
-    }
 }
