@@ -36,9 +36,7 @@ class CommentCrudController extends AbstractCrudController
         return $actions
             ->remove(Crud::PAGE_INDEX, Action::NEW)
             ->remove(Crud::PAGE_INDEX, Action::EDIT)
-            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
-                return $action->setCssClass('btn btn-danger');
-            })
+
          ;
     }
 }

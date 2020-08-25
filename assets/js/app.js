@@ -23,7 +23,7 @@ slider.init();
 
 if ($(".rates").length) {
   $.ajax({
-    url: `https://127.0.0.1:8000/rating/${$(".rates").attr("data-id")}`,
+    url: `https://www.blog.passetemps.benpilliez.fr/rating/${$(".rates").attr("data-id")}`,
     method: "GET",
     success: function (data) {
       $(".rates").html(data.template);
@@ -55,7 +55,7 @@ rating.init(
     readonly: false,
     change_once: false, // Determines if the rating can only be set once
     ajax_method: "POST",
-    url: `https://127.0.0.1:8000/rating/${$(".rating").attr("id")}`,
+    url: `https://www.blog.passetemps.benpilliez.fr/rating/${$(".rating").attr("id")}`,
     additional_data: {}, // Additional data to send to the server
   },
   ".rating"

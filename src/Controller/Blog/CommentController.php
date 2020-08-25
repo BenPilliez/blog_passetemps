@@ -20,6 +20,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommentController extends AbstractController
 {
+    /**
+     * @var CommentRepository
+     */
+    private $repository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+    /**
+     * @var Processor
+     */
+    private $processor;
+
     public function __construct(CommentRepository $repository, EntityManagerInterface $em, Processor $processor)
     {
         $this->repository = $repository;
@@ -61,6 +74,7 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setPost($post);
+            $comment->setPublished(false);
             $notify->notify($post, $comment);
             $this->em->persist($comment);
             $this->em->flush();
@@ -99,10 +113,11 @@ class CommentController extends AbstractController
     /**
      * @Route("/list/{id}", name="comment.list", methods={"GET"})
      */
-    public function list(Post $post, Request $request)
+    public function list(Post $post)
     {
         $request = Request::createFromGlobals();
-        $comment = $this->repository->paginateComment($post->getComment(), $request->query->get('page', 1));
+        $published = $this->repository->findPublished($post->getId());
+        $comment = $this->repository->paginateComment($published, $request->query->get('page', 1));
 
         $comment->setUsedRoute('comment.list');
 

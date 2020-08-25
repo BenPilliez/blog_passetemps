@@ -52,7 +52,7 @@ class Comment
     /**
      * @ORM\Column(type="boolean")
      */
-    private $published;
+    private $published = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="Comment", inversedBy="commentChildrens", cascade={"persist"})
@@ -69,7 +69,6 @@ class Comment
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->published = false;
         $this->commentChildrens = new ArrayCollection();
     }
 

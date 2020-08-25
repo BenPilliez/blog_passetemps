@@ -349,10 +349,13 @@ class Post
     }
 
     /**
-     * @return Collection|Comment[]
+     * @return Collection|null
      */
-    public function getComment(): Collection
+    public function getComment(): ?Collection
     {
+        if($this->getPublished() !== true){
+            return null;
+        }
         return $this->comment;
     }
 
