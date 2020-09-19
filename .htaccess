@@ -17,7 +17,3 @@ RewriteRule ^(/)?$ public/index.php [L]
         RedirectMatch 302 ^/$ /index.php/
     </IfModule>
 </IfModule>
-
-<IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
-</IfModule>
